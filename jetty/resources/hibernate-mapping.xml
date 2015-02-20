@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.bananaj.user.domain.User" table="TC_USER">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+        <property name="username" column="username" type="string"/>
+        <property name="password" column="password" type="string"/>
+        <set name="projects" table="TC_PROJECT_USER"
+             inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="USER_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.bananaj.tcm.domain.Project">
+                <column name="PROJECT_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+    <class name="com.bananaj.tcm.domain.Project" table="tc_project">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <property name="description" column="description" type="string"/>
+        <many-to-one name="owner" class="com.bananaj.user.domain.User"
+                     column="owner_user_id" not-null="true"/>
+        <set name="testCases" cascade="all" lazy="true">
+            <key column="project_id"/>
+            <one-to-many class="com.bananaj.tcm.domain.TestCase"/>
+        </set>
+        <set name="users" table="TC_PROJECT_USER"
+             inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="PROJECT_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.bananaj.user.domain.User">
+                <column name="USER_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+
+    <class name="com.bananaj.tcm.domain.TestCase" table="TC_CASE">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+        <property name="title" column="title" type="string"/>
+        <set name="infos" cascade="all" lazy="true">
+            <key column="case_id"/>
+            <one-to-many class="com.bananaj.tcm.domain.TestCaseInfo"/>
+        </set>
+        <many-to-one name="project" class="com.bananaj.tcm.domain.Project"
+                     column="project_id" not-null="true"/>
+    </class>
+
+    <class name="com.bananaj.tcm.domain.TestCaseInfo" table="TC_CASE_INFO">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+        <property name="summary" column="summary" type="string"/>
+        <property name="preconditions" column="preconditions" type="string"/>
+        <many-to-one name="testCase" class="com.bananaj.tcm.domain.TestCase"
+                     column="case_id" not-null="true"/>
+        <set name="steps" cascade="all" lazy="true">
+            <key column="case_info_id"/>
+            <one-to-many class="com.bananaj.tcm.domain.Step"/>
+        </set>
+    </class>
+
+    <class name="com.bananaj.tcm.domain.Step" table="TC_STEP">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+        <property name="description" column="description" type="string"/>
+        <property name="expected" column="expected" type="string"/>
+        <property name="sortOrder" column="sort_order" type="integer"/>
+
+        <many-to-one name="testCaseInfo" class="com.bananaj.tcm.domain.TestCaseInfo"
+                     column="case_info_id" not-null="true"/>
+    </class>
+
+
+    <class name="com.bananaj.tcm.domain.Execution" table="TC_EXEC">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="resultCode" column="result_cd" type="string"/>
+        <property name="statusCode" column="status_cd" type="string"/>
+
+        <property name="date" column="dt" type="date"/>
+        <property name="comments" column="comments" type="string"/>
+
+        <many-to-one name="testCaseInfo" class="com.bananaj.tcm.domain.TestCaseInfo"
+                     column="case_info_id" not-null="true"/>
+
+        <many-to-one name="user" class="com.bananaj.user.domain.User"
+                     column="user_id" not-null="true"/>
+
+        <set name="steps" cascade="all" lazy="true">
+            <key column="exec_id"/>
+            <one-to-many class="com.bananaj.tcm.domain.ExecutionStep"/>
+        </set>
+
+    </class>
+
+
+    <class name="com.bananaj.tcm.domain.ExecutionStep" table="TC_EXEC_STEP">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="stepId" column="step_id" type="string"/>
+        <property name="resultCode" column="result_cd" type="string"/>
+        <property name="date" column="dt" type="date"/>
+        <property name="comments" column="comments" type="string"/>
+
+        <many-to-one name="execution" class="com.bananaj.tcm.domain.Execution"
+                     column="exec_id" not-null="true"/>
+
+        <many-to-one name="user" class="com.bananaj.user.domain.User"
+                     column="user_id" not-null="true"/>
+    </class>
+
+
+</hibernate-mapping>
