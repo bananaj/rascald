@@ -6,7 +6,6 @@ import com.bananaj.tcm.domain.*;
 import com.bananaj.tcm.service.ExecutionService;
 import com.bananaj.tcm.service.TestCaseService;
 import com.bananaj.user.service.UserService;
-import com.petebevin.markdown.MarkdownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/projectpage")
@@ -105,6 +101,7 @@ public class ProjectPageController extends TcmController {
         }
 
         Enumeration<String> parameterNames = request.getParameterNames();
+        Set<Step> tempSteps = new HashSet<Step>();
 
         while (parameterNames.hasMoreElements()) {
             String parameterName = parameterNames.nextElement();
@@ -119,7 +116,7 @@ public class ProjectPageController extends TcmController {
                 }
                 else {
                     for(Step s: testCaseInfo.getSteps()) {
-                        if (stepId.equals(s.getId())) {
+                        if (s != null && stepId.equals(s.getId())) {
                             step = s;
                             break;
                         }
@@ -129,11 +126,16 @@ public class ProjectPageController extends TcmController {
                 step.setDescription(stepDescription);
                 step.setExpected(stepExpected);
                 step.setTestCaseInfo(testCaseInfo);
-                if (stepId == null || stepId.length() == 0) {
-                    testCaseInfo.getSteps().add(step);
-                }
+                tempSteps.add(step);
+
             }
         }
+
+        List<Step> steps = new ArrayList<Step>();
+        steps.addAll(tempSteps);
+        Collections.sort(steps, new StepComparator());
+        testCaseInfo.setSteps(steps);
+
         testCaseService.saveTestCase(testCase);
         TestCaseInfo testCaseInfo2 = testCaseService.saveTestCaseInfo(testCaseInfo);
         return "redirect:home/" + projectId;

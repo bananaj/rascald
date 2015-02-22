@@ -1,6 +1,8 @@
 package com.bananaj.tcm.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TestCaseInfo {
@@ -9,7 +11,7 @@ public class TestCaseInfo {
     private String summary;
     private String preconditions;
     private TestCase testCase;
-    private Set<Step> steps = new HashSet<Step>();
+    private List<Step> steps = new ArrayList<Step>();
 
     public TestCaseInfo() {
     }
@@ -46,11 +48,11 @@ public class TestCaseInfo {
         this.testCase = testCase;
     }
 
-    public Set<Step> getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(Set<Step> steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 }

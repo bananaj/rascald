@@ -76,10 +76,14 @@
         <property name="preconditions" column="preconditions" type="string"/>
         <many-to-one name="testCase" class="com.bananaj.tcm.domain.TestCase"
                      column="case_id" not-null="true"/>
-        <set name="steps" cascade="all" lazy="true">
+
+        <list name="steps" cascade="all" lazy="true">
             <key column="case_info_id"/>
+            <list-index column="sort_order"/>
             <one-to-many class="com.bananaj.tcm.domain.Step"/>
-        </set>
+        </list>
+
+
     </class>
 
     <class name="com.bananaj.tcm.domain.Step" table="TC_STEP">

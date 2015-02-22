@@ -6,11 +6,13 @@
     </thead>
     <tbody>
     <#list steps as step>
+        <#if step?has_content>
         <tr>
-            <td>${markdownProcessor.markdown(step.description)}</td>
-            <td>${markdownProcessor.markdown(step.expected)}</td>
+            <td>${wikiModel.toHtml(step.description)}</td>
+            <td>${wikiModel.toHtml(step.expected)}</td>
             <td></td>
         </tr>
+        </#if>
 
     </#list>
     </tbody>

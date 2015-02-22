@@ -32,10 +32,32 @@
     <bean id="markdownProcessor" class="com.petebevin.markdown.MarkdownProcessor">
     </bean>
 
+    <bean id="wikiModel" class="info.bliki.wiki.model.WikiModel">
+        <constructor-arg value="imageBaseURL"/>
+        <constructor-arg value="linkBaseURL"/>
+    </bean>
+
+
+
+    <!--
+    java.io.StringWriter writer = new java.io.StringWriter();
+
+    try {
+    WikiModel.toHtml("This is a simple [[Hello World]] wiki tag", writer);
+    writer.flush();
+    ...
+
+    writer.close();
+    } catch (IOException e) {
+    e.printStackTrace();
+    }
+    -->
+
     <bean id="renderer" class="com.bananaj.banant.web.FreemarkerRenderer">
         <property name="configuration" ref="freemarkerConfiguration"/>
         <property name="baseObjects">
             <map>
+                <entry key="wikiModel" value-ref="wikiModel"/>
                 <entry key="markdownProcessor" value-ref="markdownProcessor" />
             </map>
         </property>

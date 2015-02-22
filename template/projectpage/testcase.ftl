@@ -20,11 +20,11 @@
         </div>
         <div class="row">
             <div class="col-md-2">Summary:</div>
-            <div class="col-md-4">${(markdownProcessor.markdown(testCaseInfo.summary))!''}</div>
+            <div class="col-md-4">${(wikiModel.toHtml(testCaseInfo.summary))!''}</div>
         </div>
         <div class="row">
             <div class="col-md-2">Pre-Conditions:</div>
-            <div class="col-md-4">${(markdownProcessor.markdown(testCaseInfo.preconditions))!''}</div>
+            <div class="col-md-4">${(wikiModel.toHtml(testCaseInfo.preconditions))!''}</div>
         </div>
     </div>
 

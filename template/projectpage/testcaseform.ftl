@@ -87,7 +87,9 @@ $(document).ready(function () {
 
 <#if testCaseInfo?has_content>
     <#list testCaseInfo.getSteps() as step>
+        <#if step?has_content>
         addStep('${step.id}', '${step.description?js_string}','${step.expected?js_string}');
+        </#if>
     </#list>
 <#else>
     addStep('','','');
@@ -140,7 +142,17 @@ function addStep(id, description, expected) {
     $(el).attr('id', 'step-increment-' + stepNumber);
     $(el).attr('onclick', 'increment(' + stepNumber + ')');
     $(elContainer).append($(el));
+
+    el = $('#step-hidden').find('.step-decrement').clone();
+    $(el).attr('id', 'step-decrement-' + stepNumber);
+    $(el).attr('onclick', 'decrement(' + stepNumber + ')');
+    $(elContainer).append($(el));
+
+
     $(step).append($(elContainer));
+
+
+
 
     $('#steps-container tbody').append($(step));
 }
@@ -159,6 +171,25 @@ function increment(step) {
     }
 
 }
+
+
+function decrement(step) {
+
+
+    var step = $("tr[step='" + step + "']");
+    var stepVal = $(step).find('.step-order').val();
+    stepVal = parseInt(stepVal) - 1;
+    var nextStep = $.find(".step-order[value='" + stepVal + "']");
+    if ($(nextStep).length > 0) {
+        alert('decrement');
+        $(nextStep).parent().parent().before($(step));
+        $.each($.find('.step'), function( index, value ) {
+            $(value).find('.step-order').val(index - 1);
+        });
+    }
+
+}
+
     </script>
 
 </div>

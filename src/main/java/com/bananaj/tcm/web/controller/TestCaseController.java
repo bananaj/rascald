@@ -45,10 +45,8 @@ public class TestCaseController extends TcmController {
         TestCase testCase = testCaseService.findTestCaseById(testCaseId);
         if (testCase != null) {
             if (testCase.getInfos().size() > 0) {
-                Set<Step> steps = testCase.getInfos().iterator().next().getSteps();
-                List<Step> orderedSteps = new ArrayList<Step>(steps);
-                Collections.sort(orderedSteps, new StepComparator());
-                context.put("steps", orderedSteps);
+                List<Step> steps = testCase.getInfos().iterator().next().getSteps();
+                context.put("steps", steps);
             }
             else {
                 context.put("steps", new ArrayList());

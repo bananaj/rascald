@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">Comments:</div>
-            <div class="col-md-4">${(markdownProcessor.markdown(execution.comments))!''}</div>
+            <div class="col-md-4">${(wikiModel.toHtml(execution.comments))!''}</div>
         </div>
     </div>
     <div class="panel panel-default">

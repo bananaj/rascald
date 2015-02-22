@@ -11,7 +11,7 @@
 
     Test
 
-    ${markdownProcessor.markdown(heading)}
+    ${wikiModel.toHtml(heading)}
 
 
 </div>
