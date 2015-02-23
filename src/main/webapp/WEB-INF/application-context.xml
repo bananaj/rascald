@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -14,5 +13,21 @@
 
     <context:component-scan base-package="com.bananaj"/>
 
+    <bean id="authenticationFailureHandler" class="com.bananaj.common.web.AuthenticationFailureHandler">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+
+    <bean id="authenticationSuccessHandler" class="com.bananaj.common.web.AuthenticationSuccessHandler">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="validatorFactory"
+          class="javax.validation.Validation"
+          factory-method="buildDefaultValidatorFactory"/>
+
+    <bean id="validator"
+          factory-bean="validatorFactory"
+          factory-method="getValidator"/>
 
 </beans>

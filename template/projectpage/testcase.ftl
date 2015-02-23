@@ -43,11 +43,11 @@
 
     <script>
 $(document).ready(function () {
-    $.get("/tcm/testcase/testcase/${(testCase.id)!''}/steps", function(data) {
+    $.get("/mgr/testcase/testcase/${(testCase.id)!''}/steps", function(data) {
         $('#steps-container').html(data);
     });
 
-    $.get("/tcm/testcase/testcase/${(testCase.id)!''}/executions", function(data) {
+    $.get("/mgr/testcase/testcase/${(testCase.id)!''}/executions", function(data) {
         $('#executions-container').html(data);
     });
 

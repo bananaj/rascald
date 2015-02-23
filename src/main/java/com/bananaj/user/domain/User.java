@@ -1,6 +1,6 @@
 package com.bananaj.user.domain;
 
-import com.bananaj.tcm.domain.Project;
+import com.bananaj.mgr.domain.Project;
 
 import java.io.Serializable;
 import java.util.HashSet;

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,14 +8,17 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/tcm/**" access="ROLE_USER" />
+        <intercept-url pattern="/mgr/**" access="ROLE_USER" />
         <intercept-url pattern="/page/**" access="ROLE_USER" />
         <form-login
                 login-page="/guard/login/form"
-                default-target-url="/page/userpage/dashboard"
+                default-target-url="/page/userpage/home"
                 authentication-failure-url="/guard/login/form/?error"
+                authentication-failure-handler-ref="authenticationFailureHandler"
                 username-parameter="username"
-                password-parameter="password" />
+                password-parameter="password"
+                authentication-success-handler-ref="authenticationSuccessHandler"
+                />
     </http>
 
     <authentication-manager>
@@ -22,5 +26,7 @@
             <password-encoder ref="passwordEncoder"/>
         </authentication-provider>
     </authentication-manager>
+
+
 
 </beans:beans>

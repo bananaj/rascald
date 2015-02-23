@@ -1,6 +1,6 @@
 package com.bananaj.mgr.web.controller;
 
-import com.bananaj.banant.web.NitroController;
+import com.bananaj.common.web.MgrController;
 import com.bananaj.user.domain.User;
 import com.bananaj.user.domain.UserAudit;
 import com.bananaj.user.service.UserService;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-public class UserController extends NitroController {
+public class UserController extends MgrController {
 
     @Autowired
     private UserService userService;

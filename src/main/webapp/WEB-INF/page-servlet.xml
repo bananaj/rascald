@@ -9,9 +9,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath*:tcm.properties"/>
+    <context:property-placeholder location="classpath*:mgr.properties"/>
 
-    <context:component-scan base-package="com.bananaj.tcm.page.web"/>
+    <context:component-scan base-package="com.bananaj.mgr.page.web"/>
 
     <!-- freemarker config -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">

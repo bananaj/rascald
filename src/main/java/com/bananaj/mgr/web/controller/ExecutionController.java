@@ -1,6 +1,6 @@
 package com.bananaj.mgr.web.controller;
 
-import com.bananaj.banant.web.NitroController;
+import com.bananaj.common.web.MgrController;
 import com.bananaj.mgr.domain.*;
 import com.bananaj.mgr.service.ExecutionService;
 import com.bananaj.mgr.service.TestCaseService;
@@ -20,7 +20,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/execution")
-public class ExecutionController extends NitroController {
+public class ExecutionController extends MgrController {
 
     @Autowired
     private ExecutionService executionService;

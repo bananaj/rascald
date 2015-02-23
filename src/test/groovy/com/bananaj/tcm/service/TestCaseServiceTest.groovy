@@ -1,9 +1,9 @@
-package com.bananaj.tcm.service
+package com.bananaj.mgr.service
 
-import com.bananaj.tcm.domain.Project
-import com.bananaj.tcm.domain.Step;
-import com.bananaj.tcm.domain.TestCase
-import com.bananaj.tcm.domain.TestCaseInfo
+import com.bananaj.mgr.domain.Project
+import com.bananaj.mgr.domain.Step;
+import com.bananaj.mgr.domain.TestCase
+import com.bananaj.mgr.domain.TestCaseInfo
 import com.bananaj.user.domain.User
 import com.bananaj.user.service.UserService;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class TestCaseServiceTest {
         TestCase testCase = testCaseService.findTestCaseById("noway");
         assertNull(testCase);
 
-        User defaultUser = userService.getUserByUserName("tcmmanager")
+        User defaultUser = userService.getUserByUserName("mgrmanager")
         assertNotNull(defaultUser)
 
         Project project = new Project()
@@ -77,7 +77,7 @@ public class TestCaseServiceTest {
     @Test
     public void testTestCaseInfo() {
 
-        User defaultUser = userService.getUserByUserName("tcmmanager")
+        User defaultUser = userService.getUserByUserName("mgrmanager")
         assertNotNull(defaultUser)
 
         Project project = new Project()

@@ -1,4 +1,4 @@
-create table TC_USER
+create table MGR_USER
 (
   id varchar(32),
   username varchar(32),
@@ -7,7 +7,17 @@ create table TC_USER
   email varchar(64)
 );
 
-create table TC_PROJECT
+create table MGR_USER_AUDIT
+(
+  id varchar(32),
+  user_id varchar(32),
+  context_cd varchar(16),
+  context_id varchar(32),
+  action_cd varchar(5),
+  dt timestamp
+);
+
+create table MGR_PROJECT
 (
   id varchar(32),
   name varchar(32),
@@ -15,21 +25,24 @@ create table TC_PROJECT
   owner_user_id varchar(32)
 );
 
-create table TC_PROJECT_USER
+create table MGR_PROJECT_USER
 (
   id varchar(32),
   project_id varchar(32),
   user_id varchar(32)
 );
 
-create table TC_VERSION
+
+
+
+create table MGR_VERSION
 (
   id varchar(32),
   product_id varchar(32),
   name varchar(32),
 );
 
-create table TC_CASE
+create table MGR_CASE
 (
   id varchar(32),
   project_id varchar(32),
@@ -37,7 +50,7 @@ create table TC_CASE
   title varchar(64),
 );
 
-create table TC_CASE_INFO
+create table MGR_CASE_INFO
 (
   id varchar(32),
   case_id varchar(32),
@@ -45,7 +58,7 @@ create table TC_CASE_INFO
   preconditions varchar(1024)
 );
 
-create table TC_STEP
+create table MGR_STEP
 (
   id varchar(32),
   case_info_id varchar(32),
@@ -54,7 +67,7 @@ create table TC_STEP
   expected varchar(1024)
 );
 
-create table TC_GROUP
+create table MGR_GROUP
 (
   id varchar(32),
   parent_group_id varchar(32),
@@ -63,14 +76,14 @@ create table TC_GROUP
 );
 
 
-create table TC_PLAN
+create table MGR_PLAN
 (
   id varchar(32),
   title varchar(64),
   summary varchar(1024)
 );
 
-create table TC_EXEC
+create table MGR_EXEC
 (
   id varchar(32),
   case_info_id varchar(32),
@@ -82,7 +95,7 @@ create table TC_EXEC
   plan_id varchar(32)
 );
 
-create table TC_EXEC_STEP
+create table MGR_EXEC_STEP
 (
   id varchar(32),
   exec_id varchar(32),
@@ -95,6 +108,6 @@ create table TC_EXEC_STEP
 
 
 
-insert into tc_user (id, username, password) values ('tcmmanager', 'tcmmanager', 'tcmmanager');
+insert into MGR_user (id, username, password) values ('mgrmanager', 'mgrmanager', 'mgrmanager');
 
-insert into TC_PROJECT(id, name, description, owner_user_id) values ('defaultproject', 'default', 'Default Project', 'tcmmanager');
+insert into MGR_PROJECT(id, name, description, owner_user_id) values ('defaultproject', 'default', 'Default Project', 'mgrmanager');

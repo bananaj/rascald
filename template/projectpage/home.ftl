@@ -12,21 +12,22 @@
             <div class="col-md-2">Description:</div>
             <div class="col-md-4">${(project.description)!''}</div>
         </div>
-    </div>
-    <div id="mainBody">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Test Cases</h3>
-        </div>
-        <div id="testcases-container" class="panel-body">
-            Panel content
-        </div>
-    </div>
 
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Test Cases</h3>
+                <hr class="h-accent"/>
+                <div id="testcases-container">
+                    Panel content
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 <script>
 $(document).ready(function () {
-    $.get("/tcm/testcase/project/${(project.id)!''}/testcases", function(data) {
+    $.get("/mgr/testcase/project/${(project.id)!''}/testcases", function(data) {
         $('#testcases-container').html(data);
     });
 

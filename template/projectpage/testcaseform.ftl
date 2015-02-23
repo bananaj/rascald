@@ -37,18 +37,17 @@
 
         <div class="container">
             <div class="row">
-                <div class="input-group col-md-12">
-                    <input type="text" class="form-control" placeholder="Title" name="title" id="title" minlength="2" required value="${title}"/>
-                </div>
+                <label class="form-label col-md-2">Title:</label>
+                <input type="text" class="form-control" name="testcasetitle" id="testcasetitle" minlength="2" required value="${title}"/>
             </div>
             <div class="row">
                     <label class="col-md-2">Summary:</label>
-                    <textarea class="form-control col-md-10" name="summary" id="summary">${summary}</textarea>
+                    <textarea class="form-control" name="testcaseinfosummary" id="testcaseinfosummary">${summary}</textarea>
             </div>
 
             <div class="row">
                 <label class="col-md-2">Pre-Conditions:</label>
-                <textarea class="form-control col-md-10" name="preconditions" id="preconditions">${preconditions}</textarea>
+                <textarea class="form-control" name="testcaseinfopreconditions" id="testcaseinfopreconditions">${preconditions}</textarea>
             </div>
 
             <table id="steps-container" class="table table-responsive">
@@ -96,7 +95,22 @@ $(document).ready(function () {
 </#if>
 
 
-    $('#formTestCase').validate();
+    var validator = $('#formTestCase').validate({
+        submitHandler: function(form) {
+            $.post('/mgr/testcase/testcasesave', $('#formTestCase').serialize(), function(result){
+                if(result.resultCode) {
+                    if('success' === result.resultCode) {
+                        window.location = "/page/projectpage/testcase/" + result.testCaseId;
+                    }
+                    if ('validationFailed' === result.resultCode) {
+                        validator.showErrors(result.validationFailures);
+
+                    }
+                }
+            },'json');
+
+        }
+    });
 });
 
 function addStep(id, description, expected) {
@@ -106,23 +120,23 @@ function addStep(id, description, expected) {
     $(step).attr("step", stepNumber);
 
     var el = $('#step-hidden').find('.step-description').clone();
-    $(el).attr('id', 'stepdescription.' + stepNumber);
-    $(el).attr('name', 'stepdescription.' + stepNumber);
+    $(el).attr('id', 'stepdescription' + stepNumber);
+    $(el).attr('name', 'stepdescription' + stepNumber);
     $(el).val(description);
     var elContainer = $('<td/>').clone();
     $(elContainer).append($(el));
     $(step).append($(elContainer));
 
     el = $('#step-hidden').find('.step-expected').clone();
-    $(el).attr('id', 'stepexpected.' + stepNumber);
-    $(el).attr('name', 'stepexpected.' + stepNumber);
+    $(el).attr('id', 'stepexpected' + stepNumber);
+    $(el).attr('name', 'stepexpected' + stepNumber);
     $(el).val(expected);
     elContainer = $('<td/>').clone();
     $(elContainer).append($(el));
 
     el = $('#step-hidden').find('.step-id').clone();
-    $(el).attr('id', 'stepid.' + stepNumber);
-    $(el).attr('name', 'stepid.' + stepNumber);
+    $(el).attr('id', 'stepid' + stepNumber);
+    $(el).attr('name', 'stepid' + stepNumber);
     $(el).val(id);
     $(elContainer).append($(el));
 
@@ -131,8 +145,8 @@ function addStep(id, description, expected) {
     var size = $('#steps-container').find('.step').length;
 
     el = $('#step-hidden').find('.step-order').clone();
-    $(el).attr('id', 'steporder.' + stepNumber);
-    $(el).attr('name', 'steporder.' + stepNumber);
+    $(el).attr('id', 'steporder' + stepNumber);
+    $(el).attr('name', 'steporder' + stepNumber);
     $(el).val(size + 1);
 
     elContainer = $('<td/>').clone();
@@ -148,12 +162,7 @@ function addStep(id, description, expected) {
     $(el).attr('onclick', 'decrement(' + stepNumber + ')');
     $(elContainer).append($(el));
 
-
     $(step).append($(elContainer));
-
-
-
-
     $('#steps-container tbody').append($(step));
 }
 
@@ -181,7 +190,6 @@ function decrement(step) {
     stepVal = parseInt(stepVal) - 1;
     var nextStep = $.find(".step-order[value='" + stepVal + "']");
     if ($(nextStep).length > 0) {
-        alert('decrement');
         $(nextStep).parent().parent().before($(step));
         $.each($.find('.step'), function( index, value ) {
             $(value).find('.step-order').val(index - 1);

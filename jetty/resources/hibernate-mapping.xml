@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.bananaj.user.domain.User" table="TC_USER">
+    <class name="com.bananaj.user.domain.User" table="MGR_USER">
         <meta attribute="class-description">
             This class contains the employee detail.
         </meta>
@@ -13,17 +13,35 @@
         </id>
         <property name="username" column="username" type="string"/>
         <property name="password" column="password" type="string"/>
-        <set name="projects" table="TC_PROJECT_USER"
+        <set name="projects" table="MGR_PROJECT_USER"
              inverse="false" lazy="true" fetch="select" cascade="all" >
             <key>
                 <column name="USER_ID" not-null="true" />
             </key>
-            <many-to-many entity-name="com.bananaj.tcm.domain.Project">
+            <many-to-many entity-name="com.bananaj.mgr.domain.Project">
                 <column name="PROJECT_ID" not-null="true" />
             </many-to-many>
         </set>
     </class>
-    <class name="com.bananaj.tcm.domain.Project" table="tc_project">
+
+    <class name="com.bananaj.user.domain.UserAudit" table="MGR_USER_AUDIT">
+        <meta attribute="class-description">
+            This class contains the employee detail.
+        </meta>
+        <id name="id" type="string" column="id">
+            <generator class="uuid"/>
+        </id>
+        <property name="contextCd" column="context_cd" type="string"/>
+        <property name="contextId" column="context_id" type="string"/>
+        <property name="actionCd" column="action_cd" type="string"/>
+
+        <property name="date" column="dt" type="timestamp"/>
+
+        <many-to-one name="user" class="com.bananaj.user.domain.User"
+                     column="user_id" not-null="true"/>
+    </class>
+
+    <class name="com.bananaj.mgr.domain.Project" table="MGR_project">
         <meta attribute="class-description">
             This class contains the employee detail.
         </meta>
@@ -36,9 +54,9 @@
                      column="owner_user_id" not-null="true"/>
         <set name="testCases" cascade="all" lazy="true">
             <key column="project_id"/>
-            <one-to-many class="com.bananaj.tcm.domain.TestCase"/>
+            <one-to-many class="com.bananaj.mgr.domain.TestCase"/>
         </set>
-        <set name="users" table="TC_PROJECT_USER"
+        <set name="users" table="MGR_PROJECT_USER"
              inverse="false" lazy="true" fetch="select" cascade="all" >
             <key>
                 <column name="PROJECT_ID" not-null="true" />
@@ -49,23 +67,23 @@
         </set>
     </class>
 
-    <class name="com.bananaj.tcm.domain.TestCase" table="TC_CASE">
+    <class name="com.bananaj.mgr.domain.TestCase" table="MGR_CASE">
         <meta attribute="class-description">
             This class contains the employee detail.
         </meta>
         <id name="id" type="string" column="id">
             <generator class="uuid"/>
         </id>
-        <property name="title" column="title" type="string"/>
+        <property name="title" column="title" type="string" length="10"/>
         <set name="infos" cascade="all" lazy="true">
             <key column="case_id"/>
-            <one-to-many class="com.bananaj.tcm.domain.TestCaseInfo"/>
+            <one-to-many class="com.bananaj.mgr.domain.TestCaseInfo"/>
         </set>
-        <many-to-one name="project" class="com.bananaj.tcm.domain.Project"
+        <many-to-one name="project" class="com.bananaj.mgr.domain.Project"
                      column="project_id" not-null="true"/>
     </class>
 
-    <class name="com.bananaj.tcm.domain.TestCaseInfo" table="TC_CASE_INFO">
+    <class name="com.bananaj.mgr.domain.TestCaseInfo" table="MGR_CASE_INFO">
         <meta attribute="class-description">
             This class contains the employee detail.
         </meta>
@@ -74,19 +92,19 @@
         </id>
         <property name="summary" column="summary" type="string"/>
         <property name="preconditions" column="preconditions" type="string"/>
-        <many-to-one name="testCase" class="com.bananaj.tcm.domain.TestCase"
+        <many-to-one name="testCase" class="com.bananaj.mgr.domain.TestCase"
                      column="case_id" not-null="true"/>
 
         <list name="steps" cascade="all" lazy="true">
             <key column="case_info_id"/>
             <list-index column="sort_order"/>
-            <one-to-many class="com.bananaj.tcm.domain.Step"/>
+            <one-to-many class="com.bananaj.mgr.domain.Step"/>
         </list>
 
 
     </class>
 
-    <class name="com.bananaj.tcm.domain.Step" table="TC_STEP">
+    <class name="com.bananaj.mgr.domain.Step" table="MGR_STEP">
         <meta attribute="class-description">
             This class contains the employee detail.
         </meta>
@@ -97,12 +115,12 @@
         <property name="expected" column="expected" type="string"/>
         <property name="sortOrder" column="sort_order" type="integer"/>
 
-        <many-to-one name="testCaseInfo" class="com.bananaj.tcm.domain.TestCaseInfo"
+        <many-to-one name="testCaseInfo" class="com.bananaj.mgr.domain.TestCaseInfo"
                      column="case_info_id" not-null="true"/>
     </class>
 
 
-    <class name="com.bananaj.tcm.domain.Execution" table="TC_EXEC">
+    <class name="com.bananaj.mgr.domain.Execution" table="MGR_EXEC">
         <meta attribute="class-description">
             This class contains the employee detail.
         </meta>
@@ -113,10 +131,10 @@
         <property name="resultCode" column="result_cd" type="string"/>
         <property name="statusCode" column="status_cd" type="string"/>
 
-        <property name="date" column="dt" type="date"/>
+        <property name="date" column="dt" type="timestamp"/>
         <property name="comments" column="comments" type="string"/>
 
-        <many-to-one name="testCaseInfo" class="com.bananaj.tcm.domain.TestCaseInfo"
+        <many-to-one name="testCaseInfo" class="com.bananaj.mgr.domain.TestCaseInfo"
                      column="case_info_id" not-null="true"/>
 
         <many-to-one name="user" class="com.bananaj.user.domain.User"
@@ -124,13 +142,13 @@
 
         <set name="steps" cascade="all" lazy="true">
             <key column="exec_id"/>
-            <one-to-many class="com.bananaj.tcm.domain.ExecutionStep"/>
+            <one-to-many class="com.bananaj.mgr.domain.ExecutionStep"/>
         </set>
 
     </class>
 
 
-    <class name="com.bananaj.tcm.domain.ExecutionStep" table="TC_EXEC_STEP">
+    <class name="com.bananaj.mgr.domain.ExecutionStep" table="MGR_EXEC_STEP">
         <meta attribute="class-description">
             This class contains the employee detail.
         </meta>
@@ -143,7 +161,7 @@
         <property name="date" column="dt" type="date"/>
         <property name="comments" column="comments" type="string"/>
 
-        <many-to-one name="execution" class="com.bananaj.tcm.domain.Execution"
+        <many-to-one name="execution" class="com.bananaj.mgr.domain.Execution"
                      column="exec_id" not-null="true"/>
 
         <many-to-one name="user" class="com.bananaj.user.domain.User"

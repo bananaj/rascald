@@ -48,7 +48,7 @@
 
     <script>
 $(document).ready(function () {
-    $.get("/tcm/execution/testcase/execute/${(testCase.id)!''}/steps", function(data) {
+    $.get("/mgr/execution/testcase/execute/${(testCase.id)!''}/steps", function(data) {
         $('#steps-container').html(data);
     });
 });

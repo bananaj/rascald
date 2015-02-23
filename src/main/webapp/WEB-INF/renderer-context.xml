@@ -14,7 +14,7 @@
     -->
     <!--<context:property-placeholder location="classpath*:*.properties" />
     -->
-    <context:property-placeholder location="classpath*:tcm.properties"/>
+    <context:property-placeholder location="classpath*:mgr.properties"/>
 
     <bean id="freemarkerTemplateDirectory" class="java.io.File">
         <constructor-arg value="${template.directory}"/>
@@ -29,8 +29,10 @@
         <property name="templateLoader" ref="freemarkerTemplateLoader"/>
     </bean>
 
-    <bean id="markdownProcessor" class="com.petebevin.markdown.MarkdownProcessor">
+    <bean id="message"
+          class="com.bananaj.common.web.Message" init-method="init">
     </bean>
+
 
     <bean id="wikiModel" class="info.bliki.wiki.model.WikiModel">
         <constructor-arg value="imageBaseURL"/>
@@ -53,12 +55,14 @@
     }
     -->
 
-    <bean id="renderer" class="com.bananaj.banant.web.FreemarkerRenderer">
+    <bean id="renderer" class="com.bananaj.common.web.FreemarkerRenderer">
         <property name="configuration" ref="freemarkerConfiguration"/>
         <property name="baseObjects">
             <map>
                 <entry key="wikiModel" value-ref="wikiModel"/>
-                <entry key="markdownProcessor" value-ref="markdownProcessor" />
+                <entry key="m" value-ref="message"/>
+
+
             </map>
         </property>
     </bean>

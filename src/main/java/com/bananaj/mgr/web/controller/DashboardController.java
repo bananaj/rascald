@@ -1,6 +1,6 @@
 package com.bananaj.mgr.web.controller;
 
-import com.bananaj.banant.web.NitroController;
+import com.bananaj.common.web.MgrController;
 import com.bananaj.mgr.service.ProjectService;
 import com.bananaj.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/dashboard")
-public class DashboardController extends NitroController {
+public class DashboardController extends MgrController {
 
     @Autowired
     private UserService userService;

@@ -1,7 +1,6 @@
 package com.bananaj.mgr.page.web;
 
-
-import com.bananaj.banant.web.NitroController;
+import com.bananaj.common.web.MgrController;
 import com.bananaj.mgr.domain.*;
 import com.bananaj.mgr.service.ExecutionService;
 import com.bananaj.mgr.service.TestCaseService;
@@ -20,7 +19,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/projectpage")
-public class ProjectPageController extends NitroController {
+public class ProjectPageController extends MgrController {
 
     @Autowired
     private TestCaseService testCaseService;

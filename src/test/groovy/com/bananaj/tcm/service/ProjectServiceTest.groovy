@@ -1,7 +1,7 @@
-package com.bananaj.tcm.service
+package com.bananaj.mgr.service
 
-import com.bananaj.tcm.domain.Project
-import com.bananaj.tcm.domain.TestCase
+import com.bananaj.mgr.domain.Project
+import com.bananaj.mgr.domain.TestCase
 import com.bananaj.user.domain.User
 import com.bananaj.user.service.UserService
 import org.junit.Test
@@ -32,7 +32,7 @@ public class ProjectServiceTest {
     @Test
     public void testProjectSave() {
 
-        User defaultUser = userService.getUserByUserName("tcmmanager")
+        User defaultUser = userService.getUserByUserName("mgrmanager")
         assertNotNull(defaultUser)
 
         Project project = projectService.findProjectById("noway");

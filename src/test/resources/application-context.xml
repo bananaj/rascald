@@ -14,7 +14,7 @@
     -->
     <!--<context:property-placeholder location="classpath*:*.properties" />
     -->
-    <context:property-placeholder location="classpath*:tcm.properties"/>
+    <context:property-placeholder location="classpath*:mgr.properties"/>
 
     <import resource="persistence-context.xml" />
 
@@ -32,7 +32,7 @@
         <property name="templateLoader" ref="freemarkerTemplateLoader"/>
     </bean>
 
-    <bean id="renderer" class="com.bananaj.banant.web.FreemarkerRenderer">
+    <bean id="renderer" class="com.bananaj.common.web.FreemarkerRenderer">
         <property name="configuration" ref="freemarkerConfiguration"/>
     </bean>
 

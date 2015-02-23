@@ -1,6 +1,6 @@
 package com.bananaj.mgr.domain;
 
-public class Step {
+public class Step implements Ordered {
 
     private String id;
     private Integer sortOrder = 0;

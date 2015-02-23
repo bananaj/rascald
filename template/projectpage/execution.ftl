@@ -50,13 +50,13 @@
 
 <script>
 $(document).ready(function () {
-    $.get("/tcm/execution/execution/${(execution.id)!''}/steps", function(data) {
+    $.get("/mgr/execution/execution/${(execution.id)!''}/steps", function(data) {
         $('#steps-container').html(data);
     });
 });
 
 function execute(stepId) {
-    $.get("/tcm/execution/execution/${(execution.id)!''}/" + stepId + "/onestep", function(data) {
+    $.get("/mgr/execution/execution/${(execution.id)!''}/" + stepId + "/onestep", function(data) {
         $('#formExecuteStep').html(data);
         $('#modalExecuteStep').modal('show');
     });
@@ -64,9 +64,9 @@ function execute(stepId) {
 
 function saveExecuteStep() {
 
-    $.post("/tcm/execution/execution/onestep/save", $('#formExecuteStep').serialize())
+    $.post("/mgr/execution/execution/onestep/save", $('#formExecuteStep').serialize())
     .success(function(){
-        $.get("/tcm/execution/execution/${(execution.id)!''}/steps", function(data) {
+        $.get("/mgr/execution/execution/${(execution.id)!''}/steps", function(data) {
             $('#steps-container').html(data);
             $('#modalExecuteStep').modal('hide');
         });
